@@ -1,4 +1,18 @@
 <resources>
-    <string name="app_name">kanvercanver</string>
+    <string name="app_name">Kan ve Can Ver</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="kangrubu">
+        <item>KanGrubu Seçiniz</item>
+        <item>A Rh +</item>
+        <item>B Rh +</item>
+        <item>AB RH +</item>
+        <item>0 Rh +</item>
+        <item>A Rh -</item>
+        <item>B Rh -</item>
+        <item>AB RH -</item>
+        <item>0 Rh -</item>
+    </string-array>
+
+    <string name ="Country">Country</string>
 </resources>
