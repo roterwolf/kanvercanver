@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/tvBaslik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Mesaj Bırakma Ekranı"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:textStyle="bold|italic"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvKullaniciAdi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kullanıcı Adı       :"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etKullaniciAdi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Kullanıcı adınızı giriniz" />
+        </TableRow>
+        <TableRow>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvSifre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Şifre                    :"
+                android:textSize="20sp"/>
+            <EditText
+                android:id="@+id/etSifre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:text="Şifrenizi giriniz"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvKullaniciAdi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kan Grubu          :"
+                android:textSize="20sp"/>
+
+            <Spinner
+                android:id="@+id/spinnerKanGrubu"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvKullaniciAdi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mesajınız           :"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/etKullaniciAdi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Mesajınızı yazınız" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnGiris"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giriş Yap"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>

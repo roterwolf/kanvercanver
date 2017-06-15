@@ -33,21 +33,23 @@ public class MainActivity extends Activity {
         siteUrl = "http://kanvercanver.somee.com/";
 
 
-        Listener = new View.OnClickListener() {
+        Listener =  new View.OnClickListener(){
+
             @Override
             public void onClick(View v) {
+
                 switch (v.getId()){
                     case R.id.btnGirisYap:
                         activity(UyeGiris.class);
                         break;
                     case R.id.btnBagisciOl:
-                        activity(Uye.class);
+                        activity(UyeOl.class);
                         break;
                     case R.id.btnBagisciAra:
-                        activity(Uye.class);
+                        activity(KanAra.class);
                         break;
                     case R.id.btnIhtiyacAra:
-                        activity(Mesaj.class);
+                        activity(KanAra.class);
                         break;
                     case R.id.btnMesajBirak:
                         activity(Mesaj.class);

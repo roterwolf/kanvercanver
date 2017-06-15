@@ -17,10 +17,23 @@
         </intent-filter>
     </activity>
         <activity
-            android:name=".Uye"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:name=".UyeGiris">
             <intent-filter>
-                <action android:name="android.intent.action.UYE"/>
+                <action android:name="android.intent.action.UYEGIRIS"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".KanAra">
+            <intent-filter>
+                <action android:name="android.intent.action.KANARA"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UyeOl">
+            <intent-filter>
+                <action android:name="android.intent.action.UYEOL"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
