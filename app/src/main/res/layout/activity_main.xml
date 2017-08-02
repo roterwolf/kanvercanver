@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +17,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/banner1" />
+            android:src="@mipmap/banner" />
 
         <Button
             android:id="@+id/btnGirisYap"
@@ -29,7 +30,7 @@
             android:layout_alignStart="@+id/btnBagisciOl"
             android:layout_marginBottom="12dp"
             android:background="@color/colorAccent"
-            android:text="Giriş Yap"
+            android:text=" GİRİŞ YAP"
             android:textColor="@android:color/background_light" />
 
         <Button
@@ -43,7 +44,7 @@
             android:layout_alignStart="@+id/btnBagisciAra"
             android:layout_marginBottom="12dp"
             android:background="@color/colorAccent"
-            android:text="Bağışçı Ol"
+            android:text="Kayıt Ol"
             android:textColor="@android:color/background_light" />
 
         <Button

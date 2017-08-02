@@ -17,9 +17,9 @@
         </intent-filter>
     </activity>
         <activity
-            android:name=".UyeGiris">
+            android:name=".IhtiyacAra">
             <intent-filter>
-                <action android:name="android.intent.action.UYEGIRIS"/>
+                <action android:name="android.intent.action.IHTIYACARA" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -31,9 +31,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UyeOl">
+            android:name=".Listele">
             <intent-filter>
-                <action android:name="android.intent.action.UYEOL"/>
+                <action android:name="android.intent.action.LISTELE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -44,6 +44,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UyeGiris">
+            <intent-filter>
+                <action android:name="android.intent.action.UYEGIRIS"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".UyeOl">
+            <intent-filter>
+                <action android:name="android.intent.action.UYEOL"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
-
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

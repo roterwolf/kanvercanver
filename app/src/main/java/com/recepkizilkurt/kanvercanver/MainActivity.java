@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.view.Window;
+import android.widget.Toast;
 
 //AppCompatActivity
 
@@ -15,16 +16,12 @@ public class MainActivity extends Activity {
     Button  btnGirisYap,btnBagisciOl, btnBagisciAra, btnIhtiyacAra, btnMesajBirak;
     View.OnClickListener Listener;
     String siteUrl;
-
+    SessionManager sessionManager = SessionManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        install_elements();
 
-    }
-
-    private void install_elements() {
         btnGirisYap = (Button) findViewById(R.id.btnGirisYap);
         btnBagisciOl = (Button) findViewById(R.id.btnBagisciOl);
         btnBagisciAra = (Button) findViewById(R.id.btnBagisciAra);
@@ -46,10 +43,20 @@ public class MainActivity extends Activity {
                         activity(UyeOl.class);
                         break;
                     case R.id.btnBagisciAra:
-                        activity(KanAra.class);
+                        try {
+                            if (sessionManager.getValue("loginStatus"))
+                                activity(KanAra.class);
+                            else
+                                ToastYazdir("Lütfen giriş yapınız!");
+
+                        }
+                        catch (Exception e) {
+                            ToastYazdir("Lütfen giriş yapınız!");
+                        }
+
                         break;
                     case R.id.btnIhtiyacAra:
-                        activity(KanAra.class);
+                        activity(IhtiyacAra.class);
                         break;
                     case R.id.btnMesajBirak:
                         activity(Mesaj.class);
@@ -64,12 +71,24 @@ public class MainActivity extends Activity {
         btnBagisciAra.setOnClickListener(Listener);
         btnIhtiyacAra.setOnClickListener(Listener);
         btnMesajBirak.setOnClickListener(Listener);
+
+
+
     }
 
-    private void activity (Class c)
-    {
+
+    private void activity (Class c) {
         Intent i =new Intent(MainActivity.this,c);
         i.putExtra("Url",siteUrl);
         startActivity(i);
+    }
+
+    private void ToastYazdir(final String str) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

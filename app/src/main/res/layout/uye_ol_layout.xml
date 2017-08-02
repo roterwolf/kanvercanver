@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
     android:gravity="center_horizontal">
 
     <TextView
@@ -12,142 +13,268 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Kullanıcı Kayıt Ekranı"
         android:textSize="35sp"
         android:gravity="center"
         android:textStyle="bold|italic"/>
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
-
-
-
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvAdi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Adı                   :"
-                android:textSize="20sp"/>
-
-            <EditText
-                android:id="@+id/etAdi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Adınızı giriniz" />
-        </TableRow>
-
-        <TableRow>
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvSoyadi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Soyadı             :"
-                android:textSize="20sp"/>
-            <EditText
-                android:id="@+id/etSoyadi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Soyadınızı giriniz"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvDogumTarihi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Doğum Tarihi :"
-                android:textSize="20sp"/>
-            <EditText
-                android:id="@+id/etDogumTarihi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:text="Doğum Tarihi"
-                android:inputType="date" />
-
-        </TableRow>
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvKanGrubu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kan Grubu      :"
-                android:textSize="20sp"/>
-            <Spinner
-                android:id="@+id/spinnerKanGrubu"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvIli"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="İli                      :"
-                android:textSize="20sp"/>
-
-            <Spinner
-                android:id="@+id/spinnerIli"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvIlcesi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="İlçesi                :"
-                android:textSize="20sp"/>
-            <Spinner
-                android:id="@+id/spinnerIlcesi"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"/>
-        </TableRow>
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvUyeTipi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Üye Tipi           :"
-                android:textSize="20sp"/>
-            <Spinner
-                android:id="@+id/spinnerUyeTipi"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"/>
-        </TableRow>
-
-
-    </TableLayout>
-
-    <Button
-        android:id="@+id/btnGonder"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Üye Ol"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlKullaniciAdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kullanıcı Adı   :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlKullaniciAdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Kullanıcı Adınızı Giriniz"
+                        android:ems="10"
+                        android:inputType="text" />
+                    <!--android:text="Kullanıcı adınızı giriniz" -->
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlKullaniciSifre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Şifre                 :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlKullaniciSifre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="Şifrenizi Giriniz"
+                        android:ems="10"
+                        android:inputType="textPassword" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlAdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adı                   :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlAdi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                    <!--android:text="Adınızı giriniz" -->
+
+                </TableRow>
+
+                <TableRow>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlSoyadi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soyadı             :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlSoyadi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                    <!--android:text="Soyadınızı giriniz"-->
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlDogumTarihi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doğum Tarihi :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlDogumTarihi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="date" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlCepTelefonu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cep Telefonu  :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlCepTelefonu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="E-Mail                 :"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textEmailAddress" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlKanGrubu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kan Grubu      :"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUyeOlKanGrubu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlIli"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="İli                      :"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUyeOlIli"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlIlcesi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="İlçesi                :"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUyeOlIlcesi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeTipi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Üye Tipi           :"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerUyeTipi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvUyeOlAdresi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adresi              :"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/etUyeOlAdresi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textMultiLine" />
+                </TableRow>
+
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/btnUyeOlGonder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Üye Ol" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </LinearLayout>
