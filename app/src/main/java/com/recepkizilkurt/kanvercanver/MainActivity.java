@@ -27,7 +27,8 @@ public class MainActivity extends Activity {
         btnBagisciAra = (Button) findViewById(R.id.btnBagisciAra);
         btnIhtiyacAra = (Button) findViewById(R.id.btnIhtiyacAra);
         btnMesajBirak = (Button) findViewById(R.id.btnMesajBirak);
-        siteUrl = "http://kanvercanver.somee.com/";
+        //siteUrl = "http://kanvercanver.somee.com/";
+        siteUrl = "http://www.recepkurt.somee.com/";
 
 
         Listener =  new View.OnClickListener(){
@@ -44,9 +45,9 @@ public class MainActivity extends Activity {
                         break;
                     case R.id.btnBagisciAra:
                         try {
-                            if (sessionManager.getValue("loginStatus"))
+                            //if (sessionManager.getBoolValue("loginStatus"))
                                 activity(KanAra.class);
-                            else
+                            //else
                                 ToastYazdir("Lütfen giriş yapınız!");
 
                         }
@@ -59,7 +60,15 @@ public class MainActivity extends Activity {
                         activity(IhtiyacAra.class);
                         break;
                     case R.id.btnMesajBirak:
-                        activity(Mesaj.class);
+                        try{
+                            // if (sessionManager.getBoolValue("loginStatus"))
+                            activity(Mesaj.class);
+                            //else
+                            ToastYazdir("Lütfen giriş yapınız!");
+                        }
+                        catch (Exception e){
+
+                        }
                         break;
 
                 }

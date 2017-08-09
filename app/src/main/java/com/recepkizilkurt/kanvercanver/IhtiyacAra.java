@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -22,12 +23,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by recep.kizilkurt on 16.06.2017.
  */
 
-public class IhtiyacAra extends Activity{
+public class IhtiyacAra extends Activity implements
+            OnItemSelectedListener {
     Button btnIAKanAra;
     Spinner spinnerIAKanGrubu,spinnerIAIli,spinnerIAIlcesi;
     View.OnClickListener ListenerIA;
@@ -47,23 +50,18 @@ public class IhtiyacAra extends Activity{
         spinnerIAIli = (Spinner) findViewById(R.id.spinnerIAIli);
         spinnerIAIlcesi = (Spinner) findViewById(R.id.spinnerIAIlcesi);
 
-        new AspDataKanAra().execute("ilListele?");
-        install_elements();
-    }
-
-    private void install_elements() {
+        // Spinner click listener
+        spinnerIAIli.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> kgAdapterIA = ArrayAdapter.createFromResource(this,R.array.kangrubu,android.R.layout.simple_spinner_item);
-
-        ArrayAdapter<String> iliAdapterIA = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,dataListIl);
-
-        //ArrayAdapter<CharSequence> ilcesiAdapterIA= ArrayAdapter.createFromResource(this,R.array.ilcesi,android.R.layout.simple_spinner_item);
-
-
         spinnerIAKanGrubu.setAdapter(kgAdapterIA);
-        spinnerIAIli.setAdapter(iliAdapterIA);
-        //spinnerIAIlcesi.setAdapter(ilcesiAdapterIA);
-        siteUrlIA = "http://kanvercanver.somee.com/";
+
+        // Loading spinner data from database
+        loadSpinnerData("",0);
+
+
+        //siteUrlIA = "http://kanvercanver.somee.com/";
+        siteUrlIA = "http://www.recepkurt.somee.com/";
         ListenerIA =  new View.OnClickListener(){
 
             @Override
@@ -79,60 +77,57 @@ public class IhtiyacAra extends Activity{
         };
         btnIAKanAra.setOnClickListener(ListenerIA);
     }
+
     private void activityIA (Class c)    {
         Intent i =new Intent(IhtiyacAra.this,c);
         i.putExtra("Url",siteUrlIA);
         i.putExtra("KanGrubu",spinnerIAKanGrubu.getSelectedItem().toString());
         i.putExtra("Ili",spinnerIAIli.getSelectedItem().toString());
         i.putExtra("Ilcesi",spinnerIAIlcesi.getSelectedItem().toString());
+        i.putExtra("MetodName","ihtiyacSahibiAra?");
         startActivity(i);
     }
 
-    public class AspDataKanAra extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        // On selecting a spinner item
+        long ilkodu = adapterView.getItemIdAtPosition(i)+1;
+        loadSpinnerData("ilcelistele",ilkodu);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    private void loadSpinnerData(String listingType,long ilKodu) {
+        // database handler
+        DatabaseConnector db = new DatabaseConnector(getApplicationContext());
+        if (listingType.equals("ilcelistele")) {
+            // Spinner Drop down elements
+            List<String> ilceler = db.getAllilceler(ilKodu);
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapterilceler = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ilceler);
+
+            // Drop down layout style - list view with radio button
+            dataAdapterilceler.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            spinnerIAIlcesi.setAdapter(dataAdapterilceler);
+
+        } else {
+            // Spinner Drop down elements
+            List<String> iller = db.getAllili();
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapteriller = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, iller);
+
+            // Drop down layout style - list view with radio button
+            dataAdapteriller.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            spinnerIAIli.setAdapter(dataAdapteriller);
         }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            DefaultHttpClient hc = new DefaultHttpClient();
-            ResponseHandler response = new BasicResponseHandler();
-
-            String MetodName = params[0];
-            String thePath = getIntent().getStringExtra("Url") + "kanvercanver.asmx/"+MetodName;
-            try {
-                HttpGet request = new HttpGet(thePath);
-                resp = (String) hc.execute(request, response);
-                resp = new GeneralActions().cutstr(resp);
-
-                JSONArray json = new JSONArray(resp.trim());
-
-                for (int i = 0; i<json.length();i++) {
-                    JSONObject e = json.getJSONObject(i);
-                    if(MetodName.equals("ilListele?"))
-                        dataListIl.add(e.getString("name"));
-                    else
-                        dataListIlce.add(e.getString("name"));
-                }
-
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-
     }
 }

@@ -115,11 +115,11 @@ public class UyeOl extends Activity  implements
             super.onPostExecute(s);
 
             // Burada kullanıcımıza Yükkleniyor mesajını göstermek için bir ProgressDialog olşturuyoruz.
-            ProgressDialog pDialog = new ProgressDialog(UyeOl.this);
-            pDialog.setMessage("Kayıt Yapılıyor...");
-            pDialog.setIndeterminate(true);
-            pDialog.setCancelable(false); // ProgressDialog u iptal edilemez hale getirdik.
-            pDialog.show(); // ProgressDialog u gösteriyoruz.
+//            ProgressDialog pDialog = new ProgressDialog(UyeOl.this);
+//            pDialog.setMessage("Kayıt Yapılıyor...");
+//            pDialog.setIndeterminate(true);
+//            pDialog.setCancelable(false); // ProgressDialog u iptal edilemez hale getirdik.
+//            pDialog.show(); // ProgressDialog u gösteriyoruz.
 
         }
 
@@ -129,7 +129,6 @@ public class UyeOl extends Activity  implements
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpGet request = new HttpGet();
                 ResponseHandler response = new BasicResponseHandler();
-
 
 
                 String Adi = params[0];
@@ -146,29 +145,49 @@ public class UyeOl extends Activity  implements
 
                 //String bagisci ="Bağışçı";
 
-                String thePath = getIntent().getStringExtra("Url")  +"kanvercanver.asmx/uyeKayit?";
-                if(!Adi.equals(""))
-                    thePath += "adi=" + URLEncoder.encode(Adi) ;
-                if(!Soyadi.equals(""))
-                    thePath +=     "&soyadi=" + URLEncoder.encode(Soyadi) ;
-                if(!KanGrubu.equals(""))
-                    thePath +=     "&kanGrubu=" + URLEncoder.encode(KanGrubu);
-                if(!DogumTarihi.equals(""))
-                    thePath +=     "&dogumTarihi=" + URLEncoder.encode(DogumTarihi) ;
-                if(!CepTelefonu.equals(""))
-                    thePath +=     "&cepTelefonu="+ URLEncoder.encode(CepTelefonu);
-                if(!Ili.equals(""))
-                    thePath +=     "&ili=" + URLEncoder.encode(Ili) ;
-                if(!Ilcesi.equals(""))
-                    thePath +=     "&ilcesi=" + URLEncoder.encode(Ilcesi) ;
-                if(!Adres.equals(""))
-                    thePath +=     "&adres=" + URLEncoder.encode(Adres) ;
-                if(!UyeTipi.equals(""))
-                    thePath +=      "&uyeTipi="+ URLEncoder.encode(UyeTipi) ;
-                if(!KullaniciAdi.equals(""))
-                    thePath +=     "&kullaniciAdi=" + URLEncoder.encode(KullaniciAdi) ;
-                if(!KullaniciSifresi.equals(""))
-                    thePath +=     "&kullaniciSifresi=" + URLEncoder.encode(KullaniciSifresi) ;
+                String thePath = getIntent().getStringExtra("Url") + "kanvercanver.asmx/uyeKayit?";
+                if (!Adi.equals(""))
+                    thePath += "adi=" + URLEncoder.encode(Adi);
+                else {
+                    ToastYazdir("Lütfen adınızı giriniz!");
+                    return null;
+                }
+                if (!Soyadi.equals(""))
+                    thePath += "&soyadi=" + URLEncoder.encode(Soyadi);
+                else {
+                    ToastYazdir("Lütfen soyadınızı giriniz!");
+                    return null;
+                }
+                if (!KanGrubu.equals(""))
+                    thePath += "&kanGrubu=" + URLEncoder.encode(KanGrubu);
+                else {
+                    ToastYazdir("Lütfen kangrubunu giriniz!");
+                    return null;
+                }
+                if (!DogumTarihi.equals(""))
+                    thePath += "&dogumTarihi=" + URLEncoder.encode(DogumTarihi);
+                if (!CepTelefonu.equals(""))
+                    thePath += "&cepTelefonu=" + URLEncoder.encode(CepTelefonu);
+                if (!Ili.equals(""))
+                    thePath += "&ili=" + URLEncoder.encode(Ili);
+                if (!Ilcesi.equals(""))
+                    thePath += "&ilcesi=" + URLEncoder.encode(Ilcesi);
+                if (!Adres.equals(""))
+                    thePath += "&adres=" + URLEncoder.encode(Adres);
+                if (!UyeTipi.equals(""))
+                    thePath += "&uyeTipi=" + URLEncoder.encode(UyeTipi);
+                if (!KullaniciAdi.equals(""))
+                    thePath += "&kullaniciAdi=" + URLEncoder.encode(KullaniciAdi);
+                else {
+                    ToastYazdir("Lütfen kullanıcı adınızı giriniz!");
+                    return null;
+                }
+                if (!KullaniciSifresi.equals(""))
+                    thePath += "&kullaniciSifresi=" + URLEncoder.encode(KullaniciSifresi);
+                else {
+                    ToastYazdir("Lütfen kullanıcı şifrenizi giriniz!");
+                    return null;
+                }
 
 
                 request.setURI(new URI(thePath));
@@ -176,24 +195,21 @@ public class UyeOl extends Activity  implements
                 resp = (String) httpClient.execute(request, response);
                 resp = new GeneralActions().cutstr(resp);
 
-                if ( resp.trim().equals("İşlem Başarılı")) {
+                if (resp.trim().equals("İşlem Başarılı")) {
                     ToastYazdir("Üye olma işlemi başarılı bir şekilde gerçekleşti.");
-                    Thread.sleep(1500);
+
                     Intent i = new Intent(UyeOl.this, MainActivity.class);
                     i.putExtra("Url", getIntent().getStringExtra("Url"));
                     startActivity(i);
-                }
-                else {
+                } else {
                     ToastYazdir("Üye olma işlemi başarız!");
-                    Thread.sleep(1500);
+
                     Intent i = new Intent(UyeOl.this, MainActivity.class);
                     i.putExtra("Url", getIntent().getStringExtra("Url"));
                     startActivity(i);
                 }
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
+            } catch (ClientProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -201,8 +217,7 @@ public class UyeOl extends Activity  implements
                 e.printStackTrace();
             }
 
-//Insert Into kullanici Values('Deneme11','Soyad11',2,'6/28/1983 12:00:00 AM',6,39,'Adapazari',1,'Deneme11','202cb962ac59075b964b07152d234b70')
-            return null;
+          return null;
         }
     }
 

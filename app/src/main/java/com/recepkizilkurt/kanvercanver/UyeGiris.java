@@ -12,11 +12,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
@@ -65,10 +69,10 @@ public class UyeGiris extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            try {
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet request = new HttpGet();
+
+                DefaultHttpClient httpClient = new DefaultHttpClient();
                 ResponseHandler response = new BasicResponseHandler();
+
 
                 String Adi = params[0];
                 String Sifresi = params[1];
@@ -81,40 +85,46 @@ public class UyeGiris extends Activity {
                     return null;
                 }
                 if(!Sifresi.equals(""))
-                    thePath += "kullaniciSifresi=" + URLEncoder.encode(Sifresi) ;
+                    thePath += "&kullaniciSifresi=" + URLEncoder.encode(Sifresi) ;
                 else {
                     ToastYazdir("Lütfen Şifrenizi Giriniz!");
                     return null;
                 }
-
-                request.setURI(new URI(thePath));
-
+            try {
+                HttpGet request = new HttpGet(thePath);
                 resp = (String) httpClient.execute(request, response);
                 resp = new GeneralActions().cutstr(resp);
 
-                if ( resp.trim().equals("İşlem Başarılı")) {
-                    ToastYazdir("Üye giris işlemi başarılı bir şekilde gerçekleşti.");
 
-                    sessionManager.setContext(getApplicationContext());
-                    sessionManager.setValue("loginStatus", true);
+                JSONArray json = new JSONArray(resp.trim());
+
+                for (int i = 0; i<json.length();i++) {
+                    JSONObject e = json.getJSONObject(i);
+                    if (e.getInt("Id") > 0) {
+                        ToastYazdir("Üye giris işlemi başarılı bir şekilde gerçekleşti.");
+                        sessionManager.setContext(getApplicationContext());
+                        sessionManager.setBoolValue("loginStatus", true);
+                        sessionManager.setIntValue("kullaniciId", e.getInt("Id"));
+                    } else
+                        ToastYazdir("Üye giris işlemi başarısız oldu!");
                 }
-                else
-                    ToastYazdir("Üye giris işlemi başarısız oldu!");
+
+
+
 
                 Intent i = new Intent(UyeGiris.this, MainActivity.class);
                 i.putExtra("Url", getIntent().getStringExtra("Url"));
                 startActivity(i);
 
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (URISyntaxException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
         }
-    }
-    public void install_elements() {
-
     }
 
     private void ToastYazdir(final String str) {

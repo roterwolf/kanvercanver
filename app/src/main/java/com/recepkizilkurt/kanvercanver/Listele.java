@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import org.apache.http.client.ClientProtocolException;
@@ -28,7 +29,8 @@ public class Listele extends Activity {
     ArrayAdapter<String> adapterListele;
     String resp;
     ArrayList<String> data = new ArrayList<>();
-    String Url = "http://kanvercanver.somee.com/";
+    //String Url = "http://kanvercanver.somee.com/";
+    String Url = "http://www.recepkurt.somee.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState ) {
@@ -38,7 +40,7 @@ public class Listele extends Activity {
         String ili =getIntent().getStringExtra("Ili");
         String ilcesi =getIntent().getStringExtra("Ilcesi");
 
-        new AspData().execute(kanGrubu,ili,ilcesi);
+        new AspData().execute(kanGrubu,ili,ilcesi,getIntent().getStringExtra("MetodName"));
     }
 
    public class AspData extends AsyncTask<String, String, String> {
@@ -50,33 +52,40 @@ public class Listele extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            DefaultHttpClient hc = new DefaultHttpClient();
+            DefaultHttpClient httpClient = new DefaultHttpClient();
             ResponseHandler response = new BasicResponseHandler();
 
             String KanGrubu = params[0];
             String Ili = params[1].split("-")[0];
             String Ilcesi = params[2];
+            String metodName = params[3];
 
-            String thePath = getIntent().getStringExtra("Url") + "kanvercanver.asmx/bagisciAra?";
+
+            String thePath = getIntent().getStringExtra("Url") + "kanvercanver.asmx/" + metodName;
             thePath += "&kanGrubu=" + URLEncoder.encode(KanGrubu) ;
             thePath += "&ili=" + URLEncoder.encode(Ili) ;
             thePath += "&ilcesi=" + URLEncoder.encode(Ilcesi) ;
 
-            thePath = getIntent().getStringExtra("Url") + "kanvercanver.asmx/ilListele?";
+
             try {
                 HttpGet request = new HttpGet(thePath);
-                resp = (String) hc.execute(request, response);
+                resp = (String) httpClient.execute(request, response);
                 resp = new GeneralActions().cutstr(resp);
 
 
                 JSONArray json = new JSONArray(resp.trim());
 
-
                 for (int i = 0; i<json.length();i++) {
                     JSONObject e = json.getJSONObject(i);
-                    data.add(e.getString("adi") +" "+ e.getString("soyadi") +" - "+ e.getString("adres") +" - "+ e.getString("cepTelefonu"));
-                }
 
+                    String dogumTarihi = new GeneralActions().convertDate(e.getString("dogumTarihi"));
+
+                    resp = new GeneralActions().cutstr(resp);
+
+                    data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+ e.getString("ili") +"  "+ e.getString("ilcesi") +"  "+ e.getString("kanGrubu") +"  "+ dogumTarihi +"  "+ e.getString("cepTelefonu"));
+                }
+                if(data.size()==0)
+                    data.add("Her hangi bir sonuç listelenemedi.");
 
                 adapterListele = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1,data);
 

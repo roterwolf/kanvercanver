@@ -43,12 +43,20 @@ public class SessionManager {
         mEditor = mSharedPreferences.edit();
     }
 
-    public void setValue(String key, boolean value) {
+    public void setBoolValue(String key, boolean value) {
         mEditor.putBoolean(key, value);
         mEditor.commit();
     }
+    public void setIntValue(String key, Integer value) {
+        mEditor.putInt(key, value);
+        mEditor.commit();
+    }
 
-    public boolean getValue(String key) {
+    public boolean getBoolValue(String key) {
         return mSharedPreferences.getBoolean(key,false);
+    }
+
+    public Integer getIntValue(String key) {
+        return mSharedPreferences.getInt(key,0);
     }
 }

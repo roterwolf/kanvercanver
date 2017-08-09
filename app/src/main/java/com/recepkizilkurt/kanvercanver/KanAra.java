@@ -93,6 +93,7 @@ public class KanAra extends Activity  implements
         i.putExtra("KanGrubu",spinnerKanAraKanGrubu.getSelectedItem().toString());
         i.putExtra("Ili",spinnerKanAraIli.getSelectedItem().toString());
         i.putExtra("Ilcesi",spinnerKanAraIlcesi.getSelectedItem().toString());
+        i.putExtra("MetodName","bagisciAra?");
         startActivity(i);
     }
 
@@ -126,7 +127,6 @@ public class KanAra extends Activity  implements
             spinnerKanAraIli.setAdapter(dataAdapteriller);
         }
     }
-
 
     public class AspDataKanAra extends AsyncTask<String, String, String> {
         @Override
@@ -176,7 +176,7 @@ public class KanAra extends Activity  implements
 
     }
 
-	    @Override
+    @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             // On selecting a spinner item
             long ilkodu = adapterView.getItemIdAtPosition(i)+1;
