@@ -1,9 +1,12 @@
 package com.recepkizilkurt.kanvercanver;
 
+import android.content.pm.PackageInstaller;
 import android.icu.text.SimpleDateFormat;
 
+import java.net.PasswordAuthentication;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * Created by recep.kizilkurt on 28.06.2017.

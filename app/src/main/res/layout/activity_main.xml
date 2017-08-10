@@ -17,7 +17,23 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
             android:src="@mipmap/banner" />
+
+        <TextView
+            android:id="@+id/tvBaslik"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:text=" Giriş yapılmadı.." />
+
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btnGirisYap"
+            android:layout_marginTop="100dp"
+            android:text="" />
 
         <Button
             android:id="@+id/btnGirisYap"
@@ -81,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="100dp"
             android:background="@color/colorAccent"
             android:text="  İhtiyaç Mesajı Bırak  "
             android:textColor="@android:color/background_light" />

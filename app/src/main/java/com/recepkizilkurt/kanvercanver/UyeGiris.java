@@ -105,6 +105,10 @@ public class UyeGiris extends Activity {
                         sessionManager.setContext(getApplicationContext());
                         sessionManager.setBoolValue("loginStatus", true);
                         sessionManager.setIntValue("kullaniciId", e.getInt("Id"));
+                        sessionManager.setStrValue("KullaniciAdi", e.getString("kullaniciAdi"));
+                        sessionManager.setStrValue("Adi", e.getString("adi"));
+                        sessionManager.setStrValue("Soyadi", e.getString("soyadi"));
+
                     } else
                         ToastYazdir("Üye giris işlemi başarısız oldu!");
                 }

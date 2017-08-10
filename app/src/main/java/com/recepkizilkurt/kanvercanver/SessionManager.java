@@ -51,12 +51,18 @@ public class SessionManager {
         mEditor.putInt(key, value);
         mEditor.commit();
     }
-
+    public void setStrValue(String key, String value) {
+        mEditor.putString(key, value);
+        mEditor.commit();
+    }
     public boolean getBoolValue(String key) {
         return mSharedPreferences.getBoolean(key,false);
     }
 
     public Integer getIntValue(String key) {
         return mSharedPreferences.getInt(key,0);
+    }
+    public String getStrValue(String key) {
+        return mSharedPreferences.getString(key,null);
     }
 }

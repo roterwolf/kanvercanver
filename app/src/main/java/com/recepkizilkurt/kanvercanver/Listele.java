@@ -82,7 +82,11 @@ public class Listele extends Activity {
 
                     resp = new GeneralActions().cutstr(resp);
 
-                    data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+ e.getString("ili") +"  "+ e.getString("ilcesi") +"  "+ e.getString("kanGrubu") +"  "+ dogumTarihi +"  "+ e.getString("cepTelefonu"));
+                    if(metodName.equals("bagisciAra?"))
+                        data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+e.getString("kanGrubu") +"  "+ dogumTarihi +"  "+ e.getString("cepTelefonu"));
+                    else
+                        data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+e.getString("arananKanGrubu") +"  "+ e.getString("cepTelefonu"));
+
                 }
                 if(data.size()==0)
                     data.add("Her hangi bir sonuç listelenemedi.");

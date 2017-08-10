@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 //AppCompatActivity
@@ -14,8 +15,10 @@ public class MainActivity extends Activity {
 
 
     Button  btnGirisYap,btnBagisciOl, btnBagisciAra, btnIhtiyacAra, btnMesajBirak;
+    TextView txtLabel,txtLogin;
     View.OnClickListener Listener;
-    String siteUrl;
+    String siteUrl,kullaniciAdi;
+    Boolean giris=false;
     SessionManager sessionManager = SessionManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +30,21 @@ public class MainActivity extends Activity {
         btnBagisciAra = (Button) findViewById(R.id.btnBagisciAra);
         btnIhtiyacAra = (Button) findViewById(R.id.btnIhtiyacAra);
         btnMesajBirak = (Button) findViewById(R.id.btnMesajBirak);
+        txtLabel = (TextView) findViewById(R.id.tvBaslik);
+        txtLogin = (TextView) findViewById(R.id.tvLogin);
         //siteUrl = "http://kanvercanver.somee.com/";
         siteUrl = "http://www.recepkurt.somee.com/";
-
-
+        try{
+            if(sessionManager.getBoolValue("loginStatus")){
+                kullaniciAdi = sessionManager.getStrValue("KullaniciAdi");
+                txtLabel.setText("Hoşgeldin "+kullaniciAdi);
+                txtLogin.setText("              Çıkış yap");
+                giris = true;
+            }
+        }
+        catch (Exception e){
+            txtLabel.setText("Giriş yapılmadı..");
+        }
         Listener =  new View.OnClickListener(){
 
             @Override
@@ -44,31 +58,28 @@ public class MainActivity extends Activity {
                         activity(UyeOl.class);
                         break;
                     case R.id.btnBagisciAra:
-                        try {
-                            //if (sessionManager.getBoolValue("loginStatus"))
+                            if (giris)
                                 activity(KanAra.class);
-                            //else
+                            else
                                 ToastYazdir("Lütfen giriş yapınız!");
-
-                        }
-                        catch (Exception e) {
-                            ToastYazdir("Lütfen giriş yapınız!");
-                        }
-
                         break;
                     case R.id.btnIhtiyacAra:
                         activity(IhtiyacAra.class);
                         break;
                     case R.id.btnMesajBirak:
-                        try{
-                            // if (sessionManager.getBoolValue("loginStatus"))
-                            activity(Mesaj.class);
-                            //else
-                            ToastYazdir("Lütfen giriş yapınız!");
-                        }
-                        catch (Exception e){
 
-                        }
+                             if (giris)
+                                activity(Mesaj.class);
+                             else
+                                ToastYazdir("Lütfen giriş yapınız!");
+                        break;
+                    case R.id.tvLogin:
+                        sessionManager.setBoolValue("loginStatus",false);
+                        sessionManager.setIntValue("kullaniciId", 0);
+                        sessionManager.setStrValue("KullaniciAdi", null);
+                        sessionManager.setStrValue("Adi",null);
+                        sessionManager.setStrValue("Soyadi", null);
+                        activity(MainActivity.class);
                         break;
 
                 }
@@ -80,10 +91,9 @@ public class MainActivity extends Activity {
         btnBagisciAra.setOnClickListener(Listener);
         btnIhtiyacAra.setOnClickListener(Listener);
         btnMesajBirak.setOnClickListener(Listener);
+        txtLogin.setOnClickListener(Listener);
 
-
-
-    }
+   }
 
 
     private void activity (Class c) {

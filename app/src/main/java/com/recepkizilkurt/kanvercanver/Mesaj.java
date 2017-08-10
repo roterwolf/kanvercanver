@@ -101,11 +101,12 @@ public class Mesaj extends Activity {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 ResponseHandler response = new BasicResponseHandler();
 
-                String kullaniciId = params[0];
+                int kullaniciId =  Integer.parseInt(params[0]);
                 String KanGrubu = params[1];
                 String MesajAciklama = params[2];
 
             String thePath = getIntent().getStringExtra("Url") + "kanvercanver.asmx/mesajKaydet?";
+            thePath += "&kullaniciId=" + kullaniciId ;
             thePath += "&kanGrubu=" + URLEncoder.encode(KanGrubu) ;
             thePath += "&MesajAciklama=" + URLEncoder.encode(MesajAciklama) ;
 
