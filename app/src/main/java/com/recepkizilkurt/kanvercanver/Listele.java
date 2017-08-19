@@ -80,12 +80,12 @@ public class Listele extends Activity {
 
                     String dogumTarihi = new GeneralActions().convertDate(e.getString("dogumTarihi"));
 
-                    resp = new GeneralActions().cutstr(resp);
+                    //resp = new GeneralActions().cutstr(resp);
 
                     if(metodName.equals("bagisciAra?"))
                         data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+e.getString("kanGrubu") +"  "+ dogumTarihi +"  "+ e.getString("cepTelefonu"));
                     else
-                        data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+e.getString("arananKanGrubu") +"  "+ e.getString("cepTelefonu"));
+                        data.add(e.getString("adi") +" "+ e.getString("soyadi") +"  "+e.getString("arananKanGrubu") +"  "+ e.getString("cepTelefonu")+"  "+ e.getString("mesaji"));
 
                 }
                 if(data.size()==0)
