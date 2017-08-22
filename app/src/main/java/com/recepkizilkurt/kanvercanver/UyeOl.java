@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -30,7 +31,7 @@ import java.util.List;
 public class UyeOl extends Activity  implements
         OnItemSelectedListener {
 
-    EditText etUyeOlKullaniciAdi, etUyeOlKullaniciSifre, etUyeOlAdi, etUyeOlSoyadi, etUyeOlDogumTarihi, etUyeOlAdresi,etUyeOlCepTelefonu;
+    EditText etUyeOlKullaniciAdi, etUyeOlKullaniciSifre, etUyeOlAdi, etUyeOlSoyadi, etUyeOlDogumTarihi, etUyeOlAdresi,etUyeOlCepTelefonu,etUyeOlEMail;
     Spinner spinnerUyeOlKanGrubu, spinnerUyeOlIli, spinnerUyeOlIlcesi,spinnerUyeOlUyeTipi;
     Button btnUyeOlGonder;
     String resp;
@@ -52,6 +53,7 @@ public class UyeOl extends Activity  implements
         spinnerUyeOlUyeTipi = (Spinner) findViewById(R.id.spinnerUyeTipi);
         etUyeOlAdresi = (EditText) findViewById(R.id.etUyeOlAdresi);
         etUyeOlCepTelefonu = (EditText) findViewById(R.id.etUyeOlCepTelefonu);
+        etUyeOlEMail = (EditText) findViewById(R.id.etUyeOlEmail);
         btnUyeOlGonder = (Button) findViewById(R.id.btnUyeOlGonder);
 
         // Spinner click listener
@@ -76,6 +78,7 @@ public class UyeOl extends Activity  implements
                 spinnerUyeOlKanGrubu.getSelectedItem().toString(),
                 etUyeOlDogumTarihi.getText().toString(),
                 etUyeOlCepTelefonu.getText().toString(),
+                etUyeOlEMail.getText().toString(),
                 spinnerUyeOlIli.getSelectedItem().toString(),
                 spinnerUyeOlIlcesi.getSelectedItem().toString(),
                 etUyeOlAdresi.getText().toString(),
@@ -115,11 +118,11 @@ public class UyeOl extends Activity  implements
             super.onPostExecute(s);
 
             // Burada kullanıcımıza Yükkleniyor mesajını göstermek için bir ProgressDialog olşturuyoruz.
-//            ProgressDialog pDialog = new ProgressDialog(UyeOl.this);
-//            pDialog.setMessage("Kayıt Yapılıyor...");
-//            pDialog.setIndeterminate(true);
-//            pDialog.setCancelable(false); // ProgressDialog u iptal edilemez hale getirdik.
-//            pDialog.show(); // ProgressDialog u gösteriyoruz.
+            ProgressDialog pDialog = new ProgressDialog(UyeOl.this);
+            pDialog.setMessage("Kayıt Yapılıyor...");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false); // ProgressDialog u iptal edilemez hale getirdik.
+            pDialog.show(); // ProgressDialog u gösteriyoruz.
 
         }
 
@@ -136,12 +139,13 @@ public class UyeOl extends Activity  implements
                 String KanGrubu = params[2];
                 String DogumTarihi = params[3];
                 String CepTelefonu = params[4];
-                String Ili = params[5];
-                String Ilcesi = params[6];
-                String Adres = params[7];
-                String UyeTipi = params[8];
-                String KullaniciAdi = params[9];
-                String KullaniciSifresi = params[10];
+                String EMaili = params[5];
+                String Ili = params[6];
+                String Ilcesi = params[7];
+                String Adres = params[8];
+                String UyeTipi = params[9];
+                String KullaniciAdi = params[10];
+                String KullaniciSifresi = params[11];
 
                 //String bagisci ="Bağışçı";
 
@@ -168,6 +172,12 @@ public class UyeOl extends Activity  implements
                     thePath += "&dogumTarihi=" + URLEncoder.encode(DogumTarihi);
                 if (!CepTelefonu.equals(""))
                     thePath += "&cepTelefonu=" + URLEncoder.encode(CepTelefonu);
+                if (!KullaniciSifresi.equals(""))
+                    thePath += "&eMail=" + URLEncoder.encode(EMaili);
+                else {
+                    ToastYazdir("Lütfen mail adresini giriniz!");
+                    return null;
+                }
                 if (!Ili.equals(""))
                     thePath += "&ili=" + URLEncoder.encode(Ili);
                 if (!Ilcesi.equals(""))

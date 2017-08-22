@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.client.ClientProtocolException;
@@ -35,6 +36,7 @@ public class UyeGiris extends Activity {
     EditText etUyeGirisKullaniciAdi, etUyeGirisSifre;
     Button btnUyeGiris;
     SessionManager sessionManager = SessionManager.getInstance();
+    TextView txtSifremiUnuttum ;
     String resp;
 
     @Override
@@ -46,12 +48,20 @@ public class UyeGiris extends Activity {
         etUyeGirisKullaniciAdi = (EditText) findViewById(R.id.etUyeGirisKullaniciAdi);
         etUyeGirisSifre = (EditText) findViewById(R.id.etUyeGirisSifre);
         btnUyeGiris = (Button) findViewById(R.id.btnUyeGiris);
+        txtSifremiUnuttum = (TextView) findViewById(R.id.txtSifremiUnuttum);
 
         btnUyeGiris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //ToastYazdir("Üye giris işlemi başarılı bir şekilde gerçekleşti.");
-                new servis().execute(etUyeGirisKullaniciAdi.getText().toString(),etUyeGirisSifre.getText().toString());
+                new servis().execute("uyeGiris?",etUyeGirisKullaniciAdi.getText().toString(),etUyeGirisSifre.getText().toString());
+            }
+        });
+
+        txtSifremiUnuttum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new servis().execute("sifrehatirlat?",etUyeGirisKullaniciAdi.getText().toString());
             }
         });
     }
@@ -73,47 +83,80 @@ public class UyeGiris extends Activity {
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 ResponseHandler response = new BasicResponseHandler();
 
+                String WebMetod = params[0];
+                String Adi;
+                String Sifresi ;
+                String thePath;
 
-                String Adi = params[0];
-                String Sifresi = params[1];
 
-                String thePath = getIntent().getStringExtra("Url")  +"kanvercanver.asmx/uyeGiris?";
+
+            if(WebMetod.equals("uyeGiris?"))
+            {
+                Adi= params[1];
+                Sifresi = params[2];
+                thePath = getIntent().getStringExtra("Url")  +"kanvercanver.asmx/"+WebMetod;
+
                 if(!Adi.equals(""))
                     thePath += "kullaniciAdi=" + URLEncoder.encode(Adi) ;
                 else {
-                    ToastYazdir("Lütfen Adını Giriniz!");
+                    ToastYazdir("Lütfen kullanıcı adınızı giriniz!");
                     return null;
                 }
+
                 if(!Sifresi.equals(""))
                     thePath += "&kullaniciSifresi=" + URLEncoder.encode(Sifresi) ;
                 else {
-                    ToastYazdir("Lütfen Şifrenizi Giriniz!");
+                    ToastYazdir("Lütfen şifrenizi giriniz!");
                     return null;
                 }
+            }
+            else if (WebMetod.equals("sifrehatirlat?")) {
+                Adi = params[1];
+
+                thePath = getIntent().getStringExtra("Url")  +"kanvercanver.asmx/"+WebMetod;
+
+                if(!Adi.equals(""))
+                    thePath += "kullaniciAdi=" + URLEncoder.encode(Adi) ;
+                else {
+                    ToastYazdir("Lütfen kullanıcı adınızı giriniz!");
+                    return null;
+                }
+            }
+            else{
+                ToastYazdir("Yapılmak istenen işlem algılanamadı.");
+                return null;
+            }
+
+
+
+
+
             try {
                 HttpGet request = new HttpGet(thePath);
                 resp = (String) httpClient.execute(request, response);
                 resp = new GeneralActions().cutstr(resp);
 
+                if (resp.trim().equals("İşlem Başarılı"))
+                    ToastYazdir("Lütfen mail adresinizi kontrol ediniz.");
+                else{
 
-                JSONArray json = new JSONArray(resp.trim());
+                        JSONArray json = new JSONArray(resp.trim());
 
-                for (int i = 0; i<json.length();i++) {
-                    JSONObject e = json.getJSONObject(i);
-                    if (e.getInt("Id") > 0) {
-                        ToastYazdir("Üye giris işlemi başarılı bir şekilde gerçekleşti.");
-                        sessionManager.setContext(getApplicationContext());
-                        sessionManager.setBoolValue("loginStatus", true);
-                        sessionManager.setIntValue("kullaniciId", e.getInt("Id"));
-                        sessionManager.setStrValue("KullaniciAdi", e.getString("kullaniciAdi"));
-                        sessionManager.setStrValue("Adi", e.getString("adi"));
-                        sessionManager.setStrValue("Soyadi", e.getString("soyadi"));
+                        for (int i = 0; i < json.length(); i++) {
+                            JSONObject e = json.getJSONObject(i);
+                            if (e.getInt("Id") > 0) {
+                                ToastYazdir("Üye giris işlemi başarılı bir şekilde gerçekleşti.");
+                                sessionManager.setContext(getApplicationContext());
+                                sessionManager.setBoolValue("loginStatus", true);
+                                sessionManager.setIntValue("kullaniciId", e.getInt("Id"));
+                                sessionManager.setStrValue("KullaniciAdi", e.getString("kullaniciAdi"));
+                                sessionManager.setStrValue("Adi", e.getString("adi"));
+                                sessionManager.setStrValue("Soyadi", e.getString("soyadi"));
 
-                    } else
-                        ToastYazdir("Üye giris işlemi başarısız oldu!");
-                }
-
-
+                            } else
+                                ToastYazdir("Üye giris işlemi başarısız oldu!");
+                        }
+                    }
 
 
                 Intent i = new Intent(UyeGiris.this, MainActivity.class);
@@ -122,10 +165,13 @@ public class UyeGiris extends Activity {
 
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
+                ToastYazdir("İşlem başarısız oldu!");
             } catch (IOException e) {
                 e.printStackTrace();
+                ToastYazdir("İşlem başarısız oldu!");
             } catch (JSONException e) {
                 e.printStackTrace();
+                ToastYazdir("İşlem başarısız oldu!");
             }
             return null;
         }
