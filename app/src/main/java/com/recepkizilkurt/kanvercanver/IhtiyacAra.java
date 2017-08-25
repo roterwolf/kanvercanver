@@ -2,13 +2,13 @@ package com.recepkizilkurt.kanvercanver;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class IhtiyacAra extends Activity implements
             OnItemSelectedListener {
     Button btnIAKanAra;
     Spinner spinnerIAKanGrubu,spinnerIAIli,spinnerIAIlcesi;
+    CheckBox chkIli,chkIlcesi;
     View.OnClickListener ListenerIA;
     String siteUrlIA;
     String resp;
@@ -38,6 +39,8 @@ public class IhtiyacAra extends Activity implements
         spinnerIAKanGrubu = (Spinner) findViewById(R.id.spinnerIAKanGrubu);
         spinnerIAIli = (Spinner) findViewById(R.id.spinnerIAIli);
         spinnerIAIlcesi = (Spinner) findViewById(R.id.spinnerIAIlcesi);
+        chkIli = (CheckBox) findViewById(R.id.chkIli);
+        chkIlcesi = (CheckBox) findViewById(R.id.chkIlcesi);
 
         // Spinner click listener
         spinnerIAIli.setOnItemSelectedListener(this);
@@ -59,12 +62,22 @@ public class IhtiyacAra extends Activity implements
                     case R.id.btnIAKanAra:
                         activityIA(Listele.class);
                         break;
+                    case R.id.chkIli:
+                        if(!chkIli.isChecked())
+                            chkIlcesi.setChecked(false);
+                        break;
+                    case R.id.chkIlcesi:
+                            if(chkIlcesi.isChecked())
+                            chkIli.setChecked(true);
+                        break;
                     default:
                         break;
                 }
             }
         };
         btnIAKanAra.setOnClickListener(ListenerIA);
+        chkIli.setOnClickListener(ListenerIA);
+        chkIlcesi.setOnClickListener(ListenerIA);
     }
 
     private void activityIA (Class c)    {
@@ -74,6 +87,8 @@ public class IhtiyacAra extends Activity implements
         i.putExtra("Ili",spinnerIAIli.getSelectedItem().toString());
         i.putExtra("Ilcesi",spinnerIAIlcesi.getSelectedItem().toString());
         i.putExtra("MetodName","ihtiyacSahibiAra?");
+        i.putExtra("chkIli",chkIli.isChecked()? true : false);
+        i.putExtra("chkIlcesi",chkIlcesi.isChecked() ? true : false);
         startActivity(i);
     }
 

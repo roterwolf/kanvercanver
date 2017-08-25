@@ -39,8 +39,22 @@ public class Listele extends Activity {
         String kanGrubu =getIntent().getStringExtra("KanGrubu");
         String ili =getIntent().getStringExtra("Ili");
         String ilcesi =getIntent().getStringExtra("Ilcesi");
+        Boolean chkIli = getIntent().getBooleanExtra("chkIli",false);
+        Boolean chkIlcesi = getIntent().getBooleanExtra("chkIlcesi",false);
 
-        new AspData().execute(kanGrubu,ili,ilcesi,getIntent().getStringExtra("MetodName"));
+
+
+        if(chkIli){
+            if(chkIlcesi)
+                new AspData().execute(kanGrubu,ili,ilcesi,getIntent().getStringExtra("MetodName"));
+            else
+                new AspData().execute(kanGrubu,ili,"",getIntent().getStringExtra("MetodName"));
+        }
+        else
+            new AspData().execute(kanGrubu,"","",getIntent().getStringExtra("MetodName"));
+
+
+
     }
 
    public class AspData extends AsyncTask<String, String, String> {

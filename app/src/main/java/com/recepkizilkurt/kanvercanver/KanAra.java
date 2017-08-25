@@ -9,8 +9,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 
@@ -36,8 +35,8 @@ public class KanAra extends Activity  implements
 
     Button btnKanAraListele;
     Spinner spinnerKanAraKanGrubu,spinnerKanAraIli,spinnerKanAraIlcesi;
-    View.OnClickListener btnListenerKanAra;
-    View.OnClickListener spniliListenerKanAra;
+    CheckBox chkKanAraIli,chkKanAraIlcesi;
+    View.OnClickListener ListenerKanAra;
     String resp;
     ArrayList<String> dataListIl = new ArrayList<String>();
     ArrayList<String> dataListIlce = new ArrayList<String>();
@@ -53,6 +52,8 @@ public class KanAra extends Activity  implements
         spinnerKanAraKanGrubu = (Spinner) findViewById(R.id.spinnerKanAraKanGrubu);
         spinnerKanAraIli = (Spinner) findViewById(R.id.spinnerKanAraIli);
         spinnerKanAraIlcesi = (Spinner) findViewById(R.id.spinnerKanAraIlcesi);
+        chkKanAraIli = (CheckBox) findViewById(R.id.chkKanAraIli);
+        chkKanAraIlcesi = (CheckBox) findViewById(R.id.chkKanAraIlcesi);
 
         // Spinner click listener
         spinnerKanAraIli.setOnItemSelectedListener(this);
@@ -64,11 +65,11 @@ public class KanAra extends Activity  implements
 
         // Loading spinner data from database
         loadSpinnerData("",0);
-		
 
 
 
-        btnListenerKanAra =  new View.OnClickListener(){
+
+        ListenerKanAra =  new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
@@ -77,13 +78,23 @@ public class KanAra extends Activity  implements
                     case R.id.btnKanAraListele:
                         activityKanAra(Listele.class);
                         break;
+                    case R.id.chkKanAraIli:
+                        if(!chkKanAraIli.isChecked())
+                            chkKanAraIlcesi.setChecked(false);
+                        break;
+                    case R.id.chkKanAraIlcesi:
+                        if(chkKanAraIlcesi.isChecked())
+                            chkKanAraIli.setChecked(true);
+                        break;
                   default:
                         break;
 
                 }
             }
         };
-        btnKanAraListele.setOnClickListener(btnListenerKanAra);
+        btnKanAraListele.setOnClickListener(ListenerKanAra);
+        chkKanAraIli.setOnClickListener(ListenerKanAra);
+        chkKanAraIlcesi.setOnClickListener(ListenerKanAra);
     }
 
 
@@ -94,6 +105,8 @@ public class KanAra extends Activity  implements
         i.putExtra("Ili",spinnerKanAraIli.getSelectedItem().toString());
         i.putExtra("Ilcesi",spinnerKanAraIlcesi.getSelectedItem().toString());
         i.putExtra("MetodName","bagisciAra?");
+        i.putExtra("chkIli",chkKanAraIli.isChecked()? true : false);
+        i.putExtra("chkIlcesi",chkKanAraIlcesi.isChecked() ? true : false);
         startActivity(i);
     }
 
