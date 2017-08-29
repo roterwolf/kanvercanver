@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
     Button  btnGirisYap,btnBagisciOl, btnBagisciAra, btnIhtiyacAra, btnMesajBirak;
     TextView txtLabel,txtLogin;
     View.OnClickListener Listener;
-    String siteUrl,kullaniciAdi;
+    String siteUrl,kullaniciAdi,UyeTipi;
     Boolean giris=false;
     SessionManager sessionManager = SessionManager.getInstance();
     @Override
@@ -37,8 +37,10 @@ public class MainActivity extends Activity {
         try{
             if(sessionManager.getBoolValue("loginStatus")){
                 kullaniciAdi = sessionManager.getStrValue("KullaniciAdi");
+                UyeTipi = sessionManager.getStrValue("UyeTipi");
                 txtLabel.setText("Hoşgeldin "+kullaniciAdi);
-                txtLogin.setText("              Çıkış yap");
+                txtLogin.setText("           Çıkış yap");
+
                 giris = true;
             }
         }
@@ -68,8 +70,12 @@ public class MainActivity extends Activity {
                         break;
                     case R.id.btnMesajBirak:
 
-                             if (giris)
-                                activity(Mesaj.class);
+                             if (giris) {
+                                 if(UyeTipi.equals("İhtiyaç Sahibi"))
+                                    activity(Mesaj.class);
+                                 else
+                                     ToastYazdir("İhtiyaç sahibi olmayan üyeler mesaj bırakamaz!");
+                             }
                              else
                                 ToastYazdir("Lütfen giriş yapınız!");
                         break;

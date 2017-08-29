@@ -152,6 +152,8 @@ public class UyeGiris extends Activity {
                                 sessionManager.setStrValue("KullaniciAdi", e.getString("kullaniciAdi"));
                                 sessionManager.setStrValue("Adi", e.getString("adi"));
                                 sessionManager.setStrValue("Soyadi", e.getString("soyadi"));
+                                sessionManager.setStrValue("UyeTipi", e.getString("uyeTipi"));
+
 
                             } else
                                 ToastYazdir("Üye giris işlemi başarısız oldu!");

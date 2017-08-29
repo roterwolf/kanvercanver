@@ -35,7 +35,8 @@
             <Spinner
                 android:id="@+id/spinnerKanAraKanGrubu"
                 android:layout_width="150dp"
-                android:layout_height="35dp"/>
+                android:layout_height="35dp"
+                android:hint="Kangrubu seçiniz"/>
         </TableRow>
         <TableRow
             android:layout_width="wrap_content"

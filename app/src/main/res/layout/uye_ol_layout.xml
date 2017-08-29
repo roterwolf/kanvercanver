@@ -51,8 +51,9 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="Kullanıcı Adınızı Giriniz"
                         android:ems="10"
-                        android:inputType="text" />
-                    <!--android:text="Kullanıcı adınızı giriniz" -->
+                        android:inputType="text"
+                        android:hint="Kullanıcı adınızı giriniz"/>
+
 
                 </TableRow>
 
@@ -73,7 +74,8 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="Şifrenizi Giriniz"
                         android:ems="10"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:hint="Kullanıcı şifrenizi giriniz"/>
 
                 </TableRow>
 
@@ -93,8 +95,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName" />
-                    <!--android:text="Adınızı giriniz" -->
+                        android:inputType="textPersonName"
+                        android:hint="Adınızı giriniz"/>
+
+
 
                 </TableRow>
 
@@ -114,10 +118,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textPersonName" />
-                    <!--android:text="Soyadınızı giriniz"-->
-
-
+                        android:inputType="textPersonName"
+                        android:hint="Soyadınızı giriniz"/>
                 </TableRow>
 
                 <TableRow
@@ -136,7 +138,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="date" />
+                        android:inputType="date"
+                        android:hint="31/12/2010"/>
                 </TableRow>
 
                 <TableRow
@@ -155,7 +158,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:hint="0555 666 77 88"/>
                 </TableRow>
 
                 <TableRow
@@ -174,7 +178,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:hint="mailadresiniz@deneme.com"/>
                 </TableRow>
 
                 <TableRow
@@ -261,7 +266,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:hint="Adresinizi giriniz"/>
                 </TableRow>
 
 
